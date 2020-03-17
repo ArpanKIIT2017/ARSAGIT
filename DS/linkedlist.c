@@ -116,15 +116,15 @@ void printList(Node* head) {
 }
 
 int main() {
-	Node* head = newNode(5); // 5 -> NULL
+	Node* head = newNode(5); 			// 5 -> NULL
 	
-	head = insertAtEnd(head, 2); // 5 -> 2 -> NULL
-	head = insertAtEnd(head, 3); // 5 -> 2 -> 3 -> NULL
+	head = insertAtEnd(head, 2); 		// 5 -> 2 -> NULL
+	head = insertAtEnd(head, 3); 		// 5 -> 2 -> 3 -> NULL
 
-	head = insertAtHead(head, 1); // 1 -> 5 -> 2 -> 3 -> NULL
-	head = insertAtIndex(head, 1, 6); // 1 -> 6 -> 5 -> 2 -> 3 -> NULL
+	head = insertAtHead(head, 1); 		// 1 -> 5 -> 2 -> 3 -> NULL
+	head = insertAtIndex(head, 1, 6); 	// 1 -> 6 -> 5 -> 2 -> 3 -> NULL
 
-	head = deleteFromIndex(head, 1); // 1 -> 5 -> -> 3 -> NULL
+	head = deleteFromIndex(head, 1); 	// 1 -> 5 -> -> 3 -> NULL
 	printList(head);
 
 	return 0;
