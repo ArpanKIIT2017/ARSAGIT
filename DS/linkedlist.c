@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-#define CHECK_NULL(pointer) if (pointer == NULL) { printf("NULL POINTER ENCOUNTERED!!!"); exit -1; }
+#define CHECK_NULL(pointer) if (pointer == NULL) { printf("NULL POINTER ENCOUNTERED!!!"); exit(-1); }
 
 // Definition of a Node
 typedef struct node {
@@ -14,7 +14,9 @@ Node* newNode(int data) {
 	// This function allocates a node in heap space and return the address
 	// Reuse this function whenever you need to create a new node
 	Node* node;
-	// TODO: allocate a node using malloc and save the address to node
+	// TODO: allocate a node using malloc and save the address to node -> DONE
+	
+	node = (Node*) malloc(sizeof(Node));
 	
 	node->data = data; // assign data to the newly created Node
 	node->next = NULL; // initialize the next pointer with NULL
@@ -27,7 +29,14 @@ Node* insertAtEnd(Node* head, int data) {
 	
 	CHECK_NULL(head)
 	
+	
+	Node* temp = head; // Initialize temp with head
 
+	while (temp->next != NULL) {
+		temp = temp->next;
+	}
+
+	temp->next = newNode(data);
 	return head;
 }
 
@@ -36,7 +45,10 @@ Node* insertAtHead(Node* head, int data) {
 	
 	CHECK_NULL(head)
 
-	return head;
+	Node* newHead = newNode(data);
+	newHead->next = head;
+
+	return newHead;
 }
 
 Node* insertAfter(Node* head, Node* entry, int data) {
@@ -64,8 +76,20 @@ Node* entryAt(Node* head, int index) {
 	CHECK_NULL(head)
 
 	Node* entry;
-	// TODO: Your code to find the required entry
-	
+	// TODO: Your code to find the required entry - DONE
+	Node* temp = head;
+
+	int i = 0;
+	while (temp != NULL) {
+		if (i == index) {
+			break;
+		}
+
+		temp = temp->next;
+		i++;
+	}
+
+	entry = temp;
 	return head;
 }
 
@@ -75,11 +99,13 @@ Node* insertAtIndex(Node* head, int index, int data) {
 		
 	CHECK_NULL(head)
 
+	Node* entry = entryAt(head, index - 1);
+
 	// TODO: Write your code for the same
-	return head;
+	return insertAfter(head, entry, data);
 }
 
-
+/*
 Node* deleteEntry(Node* head, Node* entry) {
 	// delete the entry from the list
 	// and return head
@@ -89,8 +115,38 @@ Node* deleteEntry(Node* head, Node* entry) {
 	CHECK_NULL(entry)
 
 	// TODO: Write your code for the same
+	
+	Node* temp = head;
+	Node* prev = NULL;
+
+	while (temp != entry) {
+		prev = temp;
+		temp = temp->next;
+	}
+
+	if (!prev) {
+		head = entry->next;	
+	} else {
+		prev = entry->next;
+	}
+	
+	free(entry);
+	return head;
+}*/
+
+Node* deleteEntry(Node* head, Node* entry) {
+	Node** indirect = &head;
+
+	while ((*indirect) != entry) {
+		indirect = &(*indirect)->next;
+	}
+
+	*indirect = entry->next;
+	free(entry);
+
 	return head;
 }
+
 
 Node* deleteFromIndex(Node* head, int index) {
 	// delete from index
@@ -113,18 +169,26 @@ void printList(Node* head) {
 		printf("%d ", temp->data);
 		temp = temp->next;
 	}
+	printf("\n");
 }
 
 int main() {
 	Node* head = newNode(5); 			// 5 -> NULL
-	
+	printList(head);
+
 	head = insertAtEnd(head, 2); 		// 5 -> 2 -> NULL
+	printList(head);
+
 	head = insertAtEnd(head, 3); 		// 5 -> 2 -> 3 -> NULL
+	printList(head);
 
 	head = insertAtHead(head, 1); 		// 1 -> 5 -> 2 -> 3 -> NULL
-	head = insertAtIndex(head, 1, 6); 	// 1 -> 6 -> 5 -> 2 -> 3 -> NULL
+	printList(head);
 
-	head = deleteFromIndex(head, 1); 	// 1 -> 5 -> -> 3 -> NULL
+	head = insertAtIndex(head, 1, 6); 	// 1 -> 6 -> 5 -> 2 -> 3 -> NULL
+	printList(head);
+
+	head = deleteFromIndex(head, 1); 	// 1 -> 5 -> 2 -> 3 -> NULL
 	printList(head);
 
 	return 0;
