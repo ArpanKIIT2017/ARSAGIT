@@ -46,6 +46,7 @@ class Postfix {
 					// To parse char as a number
 					int num = Integer.parseInt(ch+"");
 					//TODO: Push this number onto stack
+					stack.push(num);
 
 				} else {
 					// POP two operands from stack
@@ -59,13 +60,16 @@ class Postfix {
 							stack.push(op1 + op2);
 							break;
 						case '-' : 
-							//TODO: Implement
+							//TODO
+							stack.push(op1 - op2);
 							break;
 						case '*' : 
 							//TODO: Implement
+							stack.push(op1 * op2)
 							break;
 						case '/' : 
 							//TODO: Implement
+							stack.push(op1 / op2)
 							break;
 					
 					}
