@@ -65,11 +65,11 @@ class Postfix {
 							break;
 						case '*' : 
 							//TODO: Implement
-							stack.push(op1 * op2)
+							stack.push(op1 * op2);
 							break;
 						case '/' : 
 							//TODO: Implement
-							stack.push(op1 / op2)
+							stack.push(op1 / op2);
 							break;
 					
 					}
